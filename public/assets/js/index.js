@@ -1,3 +1,4 @@
+const express = require('express');
 let noteForm;
 let noteTitle;
 let noteText;
@@ -13,6 +14,7 @@ if (window.location.pathname === '/notes') {
   newNoteBtn = document.querySelector('.new-note');
   clearBtn = document.querySelector('.clear-btn');
   noteList = document.querySelectorAll('.list-container .list-group');
+  startBtn = document.querySelector('btn btn-primary btn-lg mt-4');
 }
 
 // Show an element
@@ -33,6 +35,7 @@ const getNotes = () =>
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
+
     }
   });
 
@@ -180,7 +183,12 @@ const renderNoteList = async (notes) => {
     noteListItems.forEach((note) => noteList[0].append(note));
   }
 };
-
+// add event lister for "Get Started" button on index.html
+document.addEventListener('DOMContentLoaded', () => {
+  startBtn.addEventListener('click', () => {
+    window.location.href = '/notes';
+  });
+});
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
 
