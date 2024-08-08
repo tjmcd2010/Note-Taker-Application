@@ -6,13 +6,13 @@ const {
   writeToFile,
 } = require('../helpers/fsUtils');
 
-// GET Route for retrieving all the notes
+// GET Route for retrieving all stored notes
 notes.get('/', (req, res) => {
   readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
 });
 
 
-// GET Route for a specific note
+// GET Route to view a specific note
 notes.get('/:note_id', (req, res) => {
   const noteId = req.params.note_id;
   readFromFile('./db/notes.json')
@@ -25,9 +25,7 @@ notes.get('/:note_id', (req, res) => {
     });
 });
 
-
-
-// POST Route for a new UX/UI note
+// POST Route to create a new note.
 notes.post('/', (req, res) => {
   console.log(req.body);
 
@@ -46,7 +44,9 @@ notes.post('/', (req, res) => {
     res.error('Error in adding note');
   }
 });
-// * `DELETE /api/notes/:id` should receive a query parameter that contains the id of a note to delete. To delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
+// Route to delete a note, removes the note with the given `id` property, 
+//and then rewrites the notes to the `db.json` file.
+
 notes.delete('/:noteId', (req, res) => {
   const noteId = req.params.noteId;
   readFromFile('./db/notes.json')
